@@ -1,9 +1,9 @@
-package com.example.Library.controller;
+package com.example.library.controller;
 
-import com.example.Library.exception.AuthorException;
-import com.example.Library.model.entity.Author;
-import com.example.Library.model.entity.Book;
-import com.example.Library.service.IAuthorService;
+import com.example.library.exception.AuthorException;
+import com.example.library.model.entity.Author;
+import com.example.library.model.entity.Book;
+import com.example.library.service.IAuthorService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,7 +40,7 @@ public class AuthorController {
         }
         authorList = service.getByValue(value);
         model.put("authorList", authorList);
-        return "/author/get_author.html";
+        return "/author/search_author.html";
     }
 
     @GetMapping("/save-author")
@@ -68,26 +68,26 @@ public class AuthorController {
         return "/author/modify_author.html";
     }
 
-    @PostMapping("/modify-student/{id}")
+    @PostMapping("/modify-author/{id}")
     public String modify(@PathVariable String id, @RequestParam String name, @RequestParam String surname) throws AuthorException {
         service.modify(id, name, surname);
         return REDIRECT_AUTHOR_SEARCH_AUTHOR;
     }
 
-    @GetMapping("/enable-student/{id}")
+    @GetMapping("/enable-author/{id}")
     public String enable(@PathVariable String id) throws AuthorException {
         service.enable(id);
         return REDIRECT_AUTHOR_SEARCH_AUTHOR;
     }
 
-    @GetMapping("/disable-student/{id}")
+    @GetMapping("/disable-author/{id}")
     public String disable(@PathVariable String id) throws AuthorException {
         service.disable(id);
         return REDIRECT_AUTHOR_SEARCH_AUTHOR;
     }
 
-    @GetMapping("/detail-student/{id}")
-    public String detailStudent(ModelMap model, @PathVariable String id) throws AuthorException {
+    @GetMapping("/detail-author/{id}")
+    public String detail(ModelMap model, @PathVariable String id) throws AuthorException {
         Author author = service.getById(id);
         model.put("author", author);
         List<Book> bookList = author.getBookList();

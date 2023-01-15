@@ -1,6 +1,6 @@
-package com.example.Library.repository;
+package com.example.library.repository;
 
-import com.example.Library.model.entity.Loan;
+import com.example.library.model.entity.Loan;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ILoanRepository extends JpaRepository<Loan, String> {

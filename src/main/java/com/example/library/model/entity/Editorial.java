@@ -1,4 +1,4 @@
-package com.example.Library.model.entity;
+package com.example.library.model.entity;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -40,6 +40,10 @@ public class Editorial {
     @OneToMany(mappedBy = "editorial", cascade = CascadeType.ALL)
     @ToString.Exclude
     private List<Book> bookList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "editorial", cascade = CascadeType.ALL)
+    @ToString.Exclude
+    private List<Author> authorList = new ArrayList<>();
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "creation_date", nullable = false)

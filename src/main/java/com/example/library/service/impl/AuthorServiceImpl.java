@@ -1,10 +1,10 @@
-package com.example.Library.service.impl;
+package com.example.library.service.impl;
 
-import com.example.Library.exception.AuthorException;
-import com.example.Library.model.entity.Author;
-import com.example.Library.model.enums.EExceptionMessage;
-import com.example.Library.repository.IAuthorRepository;
-import com.example.Library.service.IAuthorService;
+import com.example.library.exception.AuthorException;
+import com.example.library.model.entity.Author;
+import com.example.library.model.enums.EExceptionMessage;
+import com.example.library.repository.IAuthorRepository;
+import com.example.library.service.IAuthorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

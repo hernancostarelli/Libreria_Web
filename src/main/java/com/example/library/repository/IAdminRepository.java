@@ -1,6 +1,6 @@
-package com.example.Library.repository;
+package com.example.library.repository;
 
-import com.example.Library.model.entity.Admin;
+import com.example.library.model.entity.Admin;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface IAdminRepository extends JpaRepository<Admin, String> {

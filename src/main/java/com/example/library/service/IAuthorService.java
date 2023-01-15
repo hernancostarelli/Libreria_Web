@@ -1,7 +1,7 @@
-package com.example.Library.service;
+package com.example.library.service;
 
-import com.example.Library.exception.AuthorException;
-import com.example.Library.model.entity.Author;
+import com.example.library.exception.AuthorException;
+import com.example.library.model.entity.Author;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

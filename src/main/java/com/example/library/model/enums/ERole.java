@@ -1,4 +1,4 @@
-package com.example.Library.model.enums;
+package com.example.library.model.enums;
 
 public enum ERole {
 

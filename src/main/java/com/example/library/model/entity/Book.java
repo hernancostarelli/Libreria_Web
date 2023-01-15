@@ -1,6 +1,5 @@
-package com.example.Library.model.entity;
+package com.example.library.model.entity;
 
-import com.example.Library.model.enums.ERole;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -10,10 +9,12 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -21,33 +22,43 @@ import java.util.Date;
 import java.util.Objects;
 
 @Entity
-@Table(name = "admin")
+@Table(name = "book")
 @Getter
 @Setter
 @ToString
 @RequiredArgsConstructor
-public class Admin {
+public class Book {
 
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
-    private String id;
+    private String isbn;
 
-    @Column(name = "name", nullable = false)
-    private String name;
+    @Column(name = "title", nullable = false)
+    private String title;
 
-    @Column(name = "surname", nullable = false)
-    private String surname;
+    @Column(name = "year", nullable = false)
+    private String year;
 
-    @Column(name = "email", nullable = false)
-    private String email;
+    @Column(name = "copies", nullable = false)
+    private Integer copies = 0;
 
-    @Column(name = "password", nullable = false)
-    private String password;
+    @Column(name = "borrow_copies")
+    private Integer borrowedCopies = 0;
 
-    @Column(name = "role", nullable = false)
-    @Enumerated(EnumType.STRING)
-    private ERole role = ERole.ADMIN;
+    @Column(name = "remaining_copies")
+    private Integer remainingCopies = 0;
+
+    @OneToOne(mappedBy = "book")
+    private Loan loan;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_author")
+    private Author author;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_editorial")
+    private Editorial editorial;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "creation_date", nullable = false)
@@ -57,10 +68,6 @@ public class Admin {
     @Column(name = "modification_date", nullable = false)
     private Date modificationDate = new Date();
 
-    public String getFullName() {
-        return this.getName() + " " + this.getSurname();
-    }
-
     @Column(name = "deleted", nullable = false)
     private boolean deleted = Boolean.FALSE;
 
@@ -68,8 +75,8 @@ public class Admin {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Admin admin = (Admin) o;
-        return id != null && Objects.equals(id, admin.id);
+        Book book = (Book) o;
+        return isbn != null && Objects.equals(isbn, book.isbn);
     }
 
     @Override
