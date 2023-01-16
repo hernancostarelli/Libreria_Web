@@ -32,7 +32,10 @@ public class Book {
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
-    private String isbn;
+    private String id;
+
+    @Column(name = "isbn", nullable = false)
+    private String isbn = String.valueOf((Math.random() * (9000000000000L - 1000000000000L)) + 1000000000000L);
 
     @Column(name = "title", nullable = false)
     private String title;
@@ -41,9 +44,9 @@ public class Book {
     private String year;
 
     @Column(name = "copies", nullable = false)
-    private Integer copies = 0;
+    private Integer copies;
 
-    @Column(name = "borrow_copies")
+    @Column(name = "borrowed_copies")
     private Integer borrowedCopies = 0;
 
     @Column(name = "remaining_copies")
@@ -54,10 +57,12 @@ public class Book {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_author")
+    @ToString.Exclude
     private Author author;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_editorial")
+    @ToString.Exclude
     private Editorial editorial;
 
     @Temporal(TemporalType.TIMESTAMP)
