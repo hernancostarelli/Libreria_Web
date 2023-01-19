@@ -1,8 +1,11 @@
 package com.example.library.model.entity;
 
 import com.example.library.model.enums.ERole;
-import lombok.Data;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import org.hibernate.Hibernate;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.CascadeType;
@@ -19,10 +22,13 @@ import javax.persistence.TemporalType;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "client")
-@Data
+@Getter
+@Setter
+@ToString
 @RequiredArgsConstructor
 public class Client {
 
@@ -51,9 +57,10 @@ public class Client {
 
     @Column(name = "role", nullable = false)
     @Enumerated(EnumType.STRING)
-    private ERole role = ERole.USER;
+    private ERole role = ERole.CLIENT;
 
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
+    @ToString.Exclude
     private List<Loan> loanList = new ArrayList<>();
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -70,4 +77,17 @@ public class Client {
 
     @Column(name = "deleted", nullable = false)
     private boolean deleted = Boolean.FALSE;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Client client = (Client) o;
+        return id != null && Objects.equals(id, client.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

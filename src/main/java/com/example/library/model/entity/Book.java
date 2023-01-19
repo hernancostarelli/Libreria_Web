@@ -50,7 +50,7 @@ public class Book {
     private Integer borrowedCopies = 0;
 
     @Column(name = "remaining_copies")
-    private Integer remainingCopies = 0;
+    private Integer remainingCopies = copies;
 
     @OneToOne(mappedBy = "book")
     private Loan loan;
