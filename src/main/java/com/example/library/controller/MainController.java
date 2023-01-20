@@ -26,7 +26,7 @@ public class MainController {
     private static final Logger logger = LoggerFactory.getLogger(MainController.class);
     private final IClientService clientService;
 
-    @GetMapping({"/", "/index", "/home"})
+    @GetMapping({"/", "/index"})
     public String index() {
         return "index.html";
     }
@@ -36,7 +36,7 @@ public class MainController {
         return "register.html";
     }
 
-    @PostMapping({"/register"})
+    /*@PostMapping({"/register"})
     public String register(ModelMap model, @RequestParam String name, @RequestParam String surname, @RequestParam String document,
                            @RequestParam String telephone, @RequestParam String email, @RequestParam String password,
                            @RequestParam String confirmPassword, RedirectAttributes redirectAttributes) {
@@ -54,7 +54,7 @@ public class MainController {
             redirectAttributes.addFlashAttribute("email", email);
             return "error.html";
         }
-    }
+    }*/
 
     @GetMapping({"/login"})
     public String login(@RequestParam(required = false) String error, ModelMap model) {
@@ -65,13 +65,13 @@ public class MainController {
     }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_CLIENT')")
-    @GetMapping("/index-client")
-    public String index(HttpSession httpSession) {
+    @GetMapping("/home")
+    public String home(HttpSession httpSession) {
         Client client = (Client) httpSession.getAttribute("userSession");
         System.err.println("client: " + httpSession.getAttribute("userSession"));
         if (client.getRole().toString().equals("ADMIN")) {
             return "redirect:/admin/dashboard";
         }
-        return "index-client.html";
+        return "/client/index-client.html";
     }
 }

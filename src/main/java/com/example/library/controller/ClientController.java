@@ -3,6 +3,7 @@ package com.example.library.controller;
 import com.example.library.exception.ClientException;
 import com.example.library.model.entity.Client;
 import com.example.library.model.entity.Loan;
+import com.example.library.model.enums.EExceptionMessage;
 import com.example.library.service.IClientService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -14,7 +15,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -51,20 +51,23 @@ public class ClientController {
     @PostMapping("/save-client")
     public String save(ModelMap model, @RequestParam String name, @RequestParam String surname, @RequestParam String document,
                        @RequestParam String telephone, @RequestParam String email, @RequestParam String password,
-                       @RequestParam String confirmPassword, RedirectAttributes redirectAttributes) {
+                       @RequestParam String confirmPassword) {
         try {
             service.save(name, surname, document, telephone, email, password, confirmPassword);
+            model.put("success", EExceptionMessage.THE_CLIENT_HAS_SUCCESSFULLY_REGISTERED.toString());
         } catch (Exception exception) {
             logger.info("OCURRIÓ UN ERROR : {}", exception.getMessage());
             model.put("error", exception.getMessage());
-            redirectAttributes.addFlashAttribute("name", name);
-            redirectAttributes.addFlashAttribute("surname", surname);
-            redirectAttributes.addFlashAttribute("document", document);
-            redirectAttributes.addFlashAttribute("telephone", telephone);
-            redirectAttributes.addFlashAttribute("email", email);
-            return "error.html";
+            model.put("name", name);
+            model.put("surname", surname);
+            model.put("document", document);
+            model.put("telephone", telephone);
+            model.put("email", email);
+            //return "/alert/error.html";
+            return "register.html";
         }
-        return "redirect:/client/dashboard";
+        //return "redirect:/client/dashboard";
+        return "register.html";
     }
 
     @GetMapping("/modify-client/{id}")

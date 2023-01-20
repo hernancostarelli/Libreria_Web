@@ -222,6 +222,7 @@ text-align: left;
 }
 
 .alert, card-body{
+margin-top: 3%;
 font-size: small;
 text-align: center;
 width: 50%;
